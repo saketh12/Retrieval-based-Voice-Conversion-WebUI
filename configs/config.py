@@ -76,7 +76,7 @@ class Config:
     @staticmethod
     def arg_parse() -> tuple:
         exe = sys.executable or "python"
-        parser = argparse.ArgumentParser()
+        parser = argparse.ArgumentParser(add_help=False)  # Disable automatic help
         parser.add_argument("--port", type=int, default=7865, help="Listen port")
         parser.add_argument("--pycmd", type=str, default=exe, help="Python command")
         parser.add_argument("--colab", action="store_true", help="Launch in colab")
@@ -93,10 +93,12 @@ class Config:
             action="store_true",
             help="torch_dml",
         )
-        cmd_opts = parser.parse_args()
-
+        
+        # Parse known args only
+        cmd_opts, _ = parser.parse_known_args()
+    
         cmd_opts.port = cmd_opts.port if 0 <= cmd_opts.port <= 65535 else 7865
-
+    
         return (
             cmd_opts.pycmd,
             cmd_opts.port,
@@ -105,6 +107,36 @@ class Config:
             cmd_opts.noautoopen,
             cmd_opts.dml,
         )
+        # exe = sys.executable or "python"
+        # parser = argparse.ArgumentParser()
+        # parser.add_argument("--port", type=int, default=7865, help="Listen port")
+        # parser.add_argument("--pycmd", type=str, default=exe, help="Python command")
+        # parser.add_argument("--colab", action="store_true", help="Launch in colab")
+        # parser.add_argument(
+        #     "--noparallel", action="store_true", help="Disable parallel processing"
+        # )
+        # parser.add_argument(
+        #     "--noautoopen",
+        #     action="store_true",
+        #     help="Do not open in browser automatically",
+        # )
+        # parser.add_argument(
+        #     "--dml",
+        #     action="store_true",
+        #     help="torch_dml",
+        # )
+        # cmd_opts = parser.parse_args()
+
+        # cmd_opts.port = cmd_opts.port if 0 <= cmd_opts.port <= 65535 else 7865
+
+        # return (
+        #     cmd_opts.pycmd,
+        #     cmd_opts.port,
+        #     cmd_opts.colab,
+        #     cmd_opts.noparallel,
+        #     cmd_opts.noautoopen,
+        #     cmd_opts.dml,
+        # )
 
     # has_mps is only available in nightly pytorch (for now) and MasOS 12.3+.
     # check `getattr` and try it for compatibility
