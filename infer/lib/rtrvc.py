@@ -452,11 +452,11 @@ class RVC:
                 infered_audio[:, : return_length * upp_res]
             )
         t5 = ttime()
-        printt(
-            "Spent time: fea = %.3fs, index = %.3fs, f0 = %.3fs, model = %.3fs",
-            t2 - t1,
-            t3 - t2,
-            t4 - t3,
-            t5 - t4,
-        )
+        # printt(
+        #     "Spent time: fea = %.3fs, index = %.3fs, f0 = %.3fs, model = %.3fs",
+        #     t2 - t1,
+        #     t3 - t2,
+        #     t4 - t3,
+        #     t5 - t4,
+        # )
         return infered_audio.squeeze()
