@@ -82,7 +82,7 @@ class RVC:
             if index_rate != 0:
                 self.index = faiss.read_index(index_path)
                 self.big_npy = self.index.reconstruct_n(0, self.index.ntotal)
-                printt("Index search enabled")
+                # printt("Index search enabled")
             self.pth_path: str = pth_path
             self.index_path = index_path
             self.index_rate = index_rate
@@ -199,7 +199,7 @@ class RVC:
         if new_index_rate != 0 and self.index_rate == 0:
             self.index = faiss.read_index(self.index_path)
             self.big_npy = self.index.reconstruct_n(0, self.index.ntotal)
-            printt("Index search enabled")
+            # printt("Index search enabled")
         self.index_rate = new_index_rate
 
     def get_f0_post(self, f0):
@@ -392,10 +392,11 @@ class RVC:
                         "Invalid index. You MUST use added_xxxx.index but not trained_xxxx.index!"
                     )
             else:
-                printt("Index search FAILED or disabled")
+                pass
+                # printt("Index search FAILED or disabled")
         except:
             traceback.print_exc()
-            printt("Index search FAILED")
+            # printt("Index search FAILED")
         t3 = ttime()
         p_len = input_wav.shape[0] // 160
         factor = pow(2, self.formant_shift / 12)
